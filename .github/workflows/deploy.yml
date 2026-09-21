@@ -1,0 +1,57 @@
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+
+      - run: flutter pub get
+
+      # --no-web-resources-cdn bundles CanvasKit into the build instead of
+      # fetching it from Google's CDN at runtime — one less external
+      # dependency for visitors on restrictive networks.
+      - run: flutter build web --release --no-web-resources-cdn --base-href "/flutter_protfolio/"
+
+      # Plain, always-succeeds artifact of the built site — independent of
+      # whether GitHub Pages is enabled, so the build can be downloaded and
+      # previewed even before that one-time Pages toggle is flipped.
+      - uses: actions/upload-artifact@v4
+        with:
+          name: web-build-preview
+          path: build/web
+          retention-days: 7
+
+      - uses: actions/configure-pages@v5
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: build/web
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4
