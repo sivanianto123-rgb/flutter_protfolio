@@ -64,6 +64,7 @@ flutter:
     - assets/ecommerce/hero.png
     - assets/ecommerce/grid.png
     - assets/ecommerce/configurator.png
+    - assets/ecommerce/checkout.png
 
   # Bundled locally rather than fetched at runtime via the google_fonts
   # package: that package downloads font files from fonts.gstatic.com on

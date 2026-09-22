@@ -466,8 +466,9 @@ class _ScreenshotCard extends StatelessWidget {
 }
 
 /// Mockup 3 — Ecommerce App: a fanned stack of real screenshots from the
-/// actual site (Monolith, a made-to-order sneaker studio) — hero, product
-/// grid, and the 3D configurator.
+/// actual site (Monolith, a made-to-order sneaker studio) — landing, the
+/// product grid, the 3D configurator, and checkout, telling the full
+/// browse-to-purchase story rather than just the hero.
 class _EcommerceVisual extends StatelessWidget {
   final bool hovering;
 
@@ -477,12 +478,14 @@ class _EcommerceVisual extends StatelessWidget {
     'assets/ecommerce/grid.png',
     'assets/ecommerce/hero.png',
     'assets/ecommerce/configurator.png',
+    'assets/ecommerce/checkout.png',
   ];
 
   @override
   Widget build(BuildContext context) {
-    const rotations = [-0.08, 0.0, 0.08];
-    const offsets = [-56.0, 0.0, 56.0];
+    const rotations = [-0.12, -0.04, 0.04, 0.12];
+    const offsets = [-96.0, -32.0, 32.0, 96.0];
+    const verticalOffsets = [16.0, -10.0, -10.0, 16.0];
 
     return Container(
       color: AppColors.surfaceElevated,
@@ -492,10 +495,10 @@ class _EcommerceVisual extends StatelessWidget {
         children: [
           for (var i = 0; i < _assets.length; i++)
             Transform.translate(
-              offset: Offset(offsets[i], i == 1 ? -10 : 14),
+              offset: Offset(offsets[i], verticalOffsets[i]),
               child: Transform.rotate(
                 angle: rotations[i],
-                child: _BrowserShot(asset: _assets[i]),
+                child: _BrowserShot(asset: _assets[i], width: 190),
               ),
             ),
         ],
@@ -509,13 +512,14 @@ class _EcommerceVisual extends StatelessWidget {
 /// Screens cards) is a desktop web app.
 class _BrowserShot extends StatelessWidget {
   final String asset;
+  final double width;
 
-  const _BrowserShot({required this.asset});
+  const _BrowserShot({required this.asset, this.width = 220});
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 220,
+      width: width,
       clipBehavior: Clip.antiAlias,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),

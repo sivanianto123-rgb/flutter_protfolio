@@ -179,12 +179,13 @@ const List<ProjectEntry> projects = [
   ),
   ProjectEntry(
     name: 'An e-commerce\nexperience.',
-    type: 'Currently building',
+    type: 'Monolith · Made-to-order sneakers',
     description:
-        'A Flutter ecommerce app — product browsing, cart, and checkout — '
-        'making discovery and shopping feel fast, clear, and delightfully '
-        'responsive.',
-    tech: ['Flutter', 'REST', 'State Management'],
-    badge: 'In Progress',
+        'A Flutter ecommerce app with a live 3D product configurator — spin '
+        'a sneaker, recolor every panel, and check out — backed by Firebase '
+        'Auth and Firestore.',
+    tech: ['Flutter', 'Firebase', 'Riverpod', '3D Configurator'],
+    url: 'https://monolithe-sneaker.web.app',
+    badge: 'Shipped',
   ),
 ];
