@@ -1,17 +1,51 @@
-# flutter_portfolio
+# Sivani — Flutter Developer Portfolio
 
-A new Flutter project.
+A single-page Flutter Web portfolio for a Flutter developer based in
+Chennai, India — dark, motion-heavy, code-themed design with a full-bleed
+video hero, left-aligned editorial layout, and a live typing-code animation.
 
-## Getting Started
+**Live site:** https://sivanianto123-rgb.github.io/flutter_protfolio/
 
-This project is a starting point for a Flutter application.
+## Sections
 
-A few resources to get you started if this is your first Flutter project:
+- **Home** — full-bleed looping video background, custom cursor, floating
+  monospace "code chip" decorations.
+- **Work** — one illustrated feature row per project (Phonics Learning App,
+  Daily UI Screens, Ecommerce App), each linking out to the real thing.
+- **Story** — bio, a live typing-code animation, and skills.
+- **Experience** — work history timeline.
+- **Contact** — resume download and contact links.
 
-- [Learn Flutter](https://docs.flutter.dev/get-started/learn-flutter)
-- [Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Flutter learning resources](https://docs.flutter.dev/reference/learning-resources)
+## Stack
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+- Flutter Web, no state management library — plain `StatefulWidget`/
+  `ValueNotifier` throughout.
+- [`flutter_animate`](https://pub.dev/packages/flutter_animate) for entrance
+  and looping animations.
+- [`url_launcher`](https://pub.dev/packages/url_launcher) for outbound
+  links (email, GitHub, resume, project links).
+- `package:web` + `dart:ui_web` platform views for the native HTML
+  `<video>` background (no Flutter video codec dependency).
+- Manrope and Instrument Serif bundled locally as font assets — not fetched
+  from Google Fonts at runtime — so the site doesn't depend on
+  `fonts.gstatic.com` being reachable for a visitor to see the right type.
+
+## Content
+
+All resume/project copy lives in one place: `lib/data/resume_data.dart`.
+Update name, bio, experience, and project entries there — the rest of the
+app is presentational and reads from it.
+
+## Running locally
+
+```bash
+flutter pub get
+flutter run -d chrome
+```
+
+## Deploying
+
+Pushing to `main` triggers `.github/workflows/deploy.yml`, which builds
+with `flutter build web --release --no-web-resources-cdn` (CanvasKit
+bundled locally rather than fetched from a CDN at runtime, for the same
+reliability reason as the fonts) and deploys to GitHub Pages.
