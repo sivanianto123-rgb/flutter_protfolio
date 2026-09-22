@@ -8,7 +8,6 @@ import 'sections/hero_section.dart';
 import 'sections/projects_section.dart';
 import 'theme/app_theme.dart';
 import 'widgets/code_field.dart';
-import 'widgets/coding_buddy.dart';
 import 'widgets/custom_cursor.dart';
 import 'widgets/nav_bar.dart';
 import 'widgets/skills_marquee.dart';
@@ -147,11 +146,6 @@ class _PortfolioPageState extends State<PortfolioPage> {
                 NavItem(label: 'Contact', onTap: () => _scrollTo(_contactKey)),
               ],
             ),
-          ),
-          const Positioned(
-            right: 28,
-            bottom: 28,
-            child: CodingBuddy(),
           ),
         ],
       ),

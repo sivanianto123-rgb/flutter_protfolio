@@ -4,6 +4,7 @@ import 'package:flutter_animate/flutter_animate.dart';
 
 import '../theme/app_theme.dart';
 import '../widgets/buttons.dart';
+import '../widgets/video_background.dart';
 
 /// Full-viewport hero: left-aligned editorial headline, kicker, and a
 /// bottom row (subtitle + CTA) offset to sit under the headline's second
@@ -30,6 +31,9 @@ class HeroSection extends StatelessWidget {
     required this.subtitle,
   });
 
+  static const _backgroundVideoUrl =
+      'https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260809_012548_ef22562c-c0ae-4816-ad9d-f8922af4e6a7.mp4';
+
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
@@ -45,6 +49,14 @@ class HeroSection extends StatelessWidget {
       child: Stack(
         fit: StackFit.expand,
         children: [
+          // Full-bleed looping background video.
+          const VideoBackground(videoUrl: _backgroundVideoUrl),
+
+          // Dark scrim so headline/nav stay legible over the video.
+          Container(
+            color: AppColors.background.withValues(alpha: 0.62),
+          ),
+
           // Subtle parallax background glow.
           ValueListenableBuilder<double>(
             valueListenable: scrollOffset,
