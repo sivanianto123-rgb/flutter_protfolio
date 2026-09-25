@@ -7,7 +7,12 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="preconnect" href="https://d2ol7oe51mr4n9.cloudfront.net" crossorigin>
+<!-- Start the video download while the HTML is still parsing, instead of waiting for the
+     render-blocking font CSS before the script runs. as="fetch" + crossorigin matches the
+     script's fetch() exactly, so the browser reuses this response rather than downloading twice. -->
+<link rel="preload" as="fetch" href="https://d2ol7oe51mr4n9.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/45567745-d826-44a2-a5ce-7ef670944e60.mp4" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500&display=swap" rel="stylesheet">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><circle cx='8' cy='8' r='6' fill='%230d0c0b'/></svg>">
 <style>
   :root{
     --fg:#0d0c0b;
