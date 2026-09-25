@@ -29,11 +29,21 @@ jobs:
       # --no-web-resources-cdn bundles CanvasKit into the build instead of
       # fetching it from Google's CDN at runtime — one less external
       # dependency for visitors on restrictive networks.
-      - run: flutter build web --release --no-web-resources-cdn --base-href "/flutter_protfolio/"
+      - run: flutter build web --release --no-web-resources-cdn --base-href "/flutter_protfolio/flutter/"
 
-      # Publish the standalone scroll-scrubbed landing page next to the
-      # Flutter build, at /flutter_protfolio/alt-design/.
-      - run: cp -r alt-design build/web/alt-design
+      # Site layout: the static landing page in alt-design/ is the homepage,
+      # the Flutter app lives at /flutter/. resume.pdf stays at the root so
+      # existing links keep working, the Flutter cleanup service worker is
+      # kept at the root so any worker registered by the old root-hosted app
+      # finds it on update and unregisters itself, and /alt-design/ redirects
+      # to the homepage.
+      - run: |
+          mkdir -p site/alt-design
+          cp -r alt-design/. site/
+          cp -r build/web site/flutter
+          cp build/web/resume.pdf site/resume.pdf
+          cp build/web/flutter_service_worker.js site/flutter_service_worker.js
+          printf '%s\n' '<!DOCTYPE html><meta charset="utf-8"><meta http-equiv="refresh" content="0; url=../"><link rel="canonical" href="../"><title>T. Sivani</title><a href="../">Continue to the homepage</a>' > site/alt-design/index.html
 
       # Plain, always-succeeds artifact of the built site — independent of
       # whether GitHub Pages is enabled, so the build can be downloaded and
@@ -41,14 +51,14 @@ jobs:
       - uses: actions/upload-artifact@v4
         with:
           name: web-build-preview
-          path: build/web
+          path: site
           retention-days: 7
 
       - uses: actions/configure-pages@v5
 
       - uses: actions/upload-pages-artifact@v3
         with:
-          path: build/web
+          path: site
 
   deploy:
     needs: build
