@@ -31,6 +31,10 @@ jobs:
       # dependency for visitors on restrictive networks.
       - run: flutter build web --release --no-web-resources-cdn --base-href "/flutter_protfolio/"
 
+      # Publish the standalone scroll-scrubbed landing page next to the
+      # Flutter build, at /flutter_protfolio/alt-design/.
+      - run: cp -r alt-design build/web/alt-design
+
       # Plain, always-succeeds artifact of the built site — independent of
       # whether GitHub Pages is enabled, so the build can be downloaded and
       # previewed even before that one-time Pages toggle is flipped.
